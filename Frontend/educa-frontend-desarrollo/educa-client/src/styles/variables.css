@@ -1,0 +1,90 @@
+/* Variables CSS */
+:root {
+  /* Colores Principales */
+  --color-primary: #051E46;
+  --color-primary-dark: #1e293b;
+  --color-primary-light: #3b82f6;
+  --color-primary-hover: rgba(255, 255, 255, 0.08);
+  --color-primary-active: rgba(255, 255, 255, 0.12);
+  
+
+  --color-accent: #16c784;
+  --color-accent-hover: #13b06e;
+  
+  /* Colores Neutros */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray-50: #f6f8fa;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #0a2540;
+  
+  /* Colores de Acento */
+  --color-blue-300: #93c5fd;
+  --color-green-500: #16c784;
+  --color-green-600: #13b06e;
+  --color-red-500: #ef4444;
+  --color-yellow-500: #f59e0b;
+  
+  /* Espaciado */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --spacing-2xl: 32px;
+  --spacing-3xl: 48px;
+  
+  /* Tamaños del Sidebar */
+  --sidebar-width-collapsed: 80px;
+  --sidebar-width-expanded: 260px;
+  
+  /* Transiciones */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s ease;
+  
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 50%;
+  
+  /* Sombras */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  
+  /* Z-index */
+  --z-sidebar: 100;
+  --z-header: 90;
+  --z-dropdown: 1000;
+  --z-modal: 1050;
+  --z-tooltip: 1100;
+  
+  /* Fuentes */
+  --font-family-base: 'Segoe UI', 'Roboto', 'Oxygen', 
+                      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 
+                      sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+  
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}

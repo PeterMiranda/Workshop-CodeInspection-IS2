@@ -1,0 +1,20 @@
+.main-layout {
+  flex: 1;
+  background: var(--color-gray-50);
+  padding: var(--spacing-2xl);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .main-layout {
+    padding: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .main-layout {
+    padding: var(--spacing-md);
+  }
+}
