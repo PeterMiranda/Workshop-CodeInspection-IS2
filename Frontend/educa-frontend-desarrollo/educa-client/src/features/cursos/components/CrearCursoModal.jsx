@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { X, ArrowLeft } from 'lucide-react';
 
 const categorias = [
@@ -13,6 +14,13 @@ const tiposContenido = [
   'Texto + voz generada por IA',
   'Solo texto'
 ];
+
+// Define IDs para los controles de formulario y para los títulos de grupo (A11y)
+const TITULO_INPUT_ID = "titulo-curso-input";
+const CATEGORIA_TITLE_ID = "categoria-curso-title"; 
+const TIPO_CONTENIDO_TITLE_ID = "tipo-contenido-title";
+const DESCRIPCION_INPUT_ID = "descripcion-curso-input";
+
 
 const CrearCursoModal = ({ onClose, onNext }) => {
   const [titulo, setTitulo] = useState('');
@@ -66,9 +74,13 @@ const CrearCursoModal = ({ onClose, onNext }) => {
         </button>
         <h2 className="crear-curso-title">Formulario de Creación de Curso</h2>
         <p className="crear-curso-desc">Ingrese los detalles de su curso a continuación.</p>
+        
         <form className="crear-curso-form" onSubmit={e => { e.preventDefault(); onNext(); }}>
-          <label className="crear-curso-label">Título del curso</label>
+          
+          {/* Título del curso - Usa <label> asociado al <input> */}
+          <label className="crear-curso-label" htmlFor={TITULO_INPUT_ID}>Título del curso</label>
           <input
+            id={TITULO_INPUT_ID}
             className="crear-curso-input"
             type="text"
             placeholder="Ingrese el título del curso"
@@ -77,36 +89,68 @@ const CrearCursoModal = ({ onClose, onNext }) => {
             required
           />
 
-          <label className="crear-curso-label">Categoría</label>
-          <div className="crear-curso-btn-group">
-            {categorias.map(cat => (
-              <button
-                type="button"
-                key={cat}
-                className={`crear-curso-btn-option${categoria === cat ? ' selected' : ''}`}
-                onClick={() => setCategoria(cat)}
-              >
-                {cat}
-              </button>
+          {/* Categoría - Usa un div como título y se asocia al radiogroup (Línea 94 corregida) */}
+          <div className="crear-curso-label" id={CATEGORIA_TITLE_ID} style={{ fontWeight: 600, color: '#111' }}>
+            Categoría
+          </div>
+          <div className="crear-curso-btn-group" role="radiogroup" aria-labelledby={CATEGORIA_TITLE_ID}>
+            {categorias.map((cat, index) => (
+              <React.Fragment key={cat}>
+                <input
+                  type="radio"
+                  id={`cat-${index}`}
+                  name="categoria"
+                  value={cat}
+                  checked={categoria === cat}
+                  onChange={() => setCategoria(cat)}
+                  // Ocultar visualmente el input nativo
+                  style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
+                />
+                <label
+                  htmlFor={`cat-${index}`}
+                  className={`crear-curso-btn-option${categoria === cat ? ' selected' : ''}`}
+                  // Estilos para que el label se vea como un botón
+                  style={{ cursor: 'pointer', padding: '10px 15px', border: '1px solid #d1d5db', borderRadius: '8px' }} 
+                >
+                  {cat}
+                </label>
+              </React.Fragment>
             ))}
           </div>
 
-          <label className="crear-curso-label">Tipo de Contenido</label>
-          <div className="crear-curso-btn-group">
-            {tiposContenido.map(tipo => (
-              <button
-                type="button"
-                key={tipo}
-                className={`crear-curso-btn-option${tipoContenido === tipo ? ' selected' : ''}`}
-                onClick={() => setTipoContenido(tipo)}
-              >
-                {tipo}
-              </button>
+          {/* Tipo de Contenido - Usa un div como título y se asocia al radiogroup (Línea 121 corregida) */}
+          <div className="crear-curso-label" id={TIPO_CONTENIDO_TITLE_ID} style={{ fontWeight: 600, color: '#111' }}>
+            Tipo de Contenido
+          </div>
+          <div className="crear-curso-btn-group" role="radiogroup" aria-labelledby={TIPO_CONTENIDO_TITLE_ID}>
+            {tiposContenido.map((tipo, index) => (
+              <React.Fragment key={tipo}>
+                <input
+                  type="radio"
+                  id={`tipo-${index}`}
+                  name="tipoContenido"
+                  value={tipo}
+                  checked={tipoContenido === tipo}
+                  onChange={() => setTipoContenido(tipo)}
+                  // Ocultar visualmente el input nativo
+                  style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}
+                />
+                <label
+                  htmlFor={`tipo-${index}`}
+                  className={`crear-curso-btn-option${tipoContenido === tipo ? ' selected' : ''}`}
+                  // Estilos para que el label se vea como un botón
+                  style={{ cursor: 'pointer', padding: '10px 15px', border: '1px solid #d1d5db', borderRadius: '8px' }}
+                >
+                  {tipo}
+                </label>
+              </React.Fragment>
             ))}
           </div>
 
-          <label className="crear-curso-label">Breve descripción / objetivo</label>
+          {/* Breve descripción / objetivo - Usa <label> asociado al <input> */}
+          <label className="crear-curso-label" htmlFor={DESCRIPCION_INPUT_ID}>Breve descripción / objetivo</label>
           <input
+            id={DESCRIPCION_INPUT_ID}
             className="crear-curso-input"
             type="text"
             placeholder="Describa el objetivo del curso"
@@ -122,6 +166,12 @@ const CrearCursoModal = ({ onClose, onNext }) => {
       </div>
     </div>
   );
+};
+
+// Se añade la validación de PropTypes
+CrearCursoModal.propTypes = {
+    onClose: PropTypes.func.isRequired,
+    onNext: PropTypes.func.isRequired,
 };
 
 export default CrearCursoModal;

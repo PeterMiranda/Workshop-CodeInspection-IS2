@@ -8,3 +8,8 @@ export const MainLayout = ({ children }) => {
     </main>
   );
 };
+
+MainLayout.propTypes = {
+  children: PropTypes.node.isRequired, 
+};
+

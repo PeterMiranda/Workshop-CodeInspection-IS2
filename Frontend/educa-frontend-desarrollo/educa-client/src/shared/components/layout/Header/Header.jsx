@@ -1,5 +1,6 @@
 import React from 'react';
 import { Bell } from 'lucide-react';
+import PropTypes from 'prop-types';
 import './Header.css';
 
 export const Header = ({ title = 'Mi Dashboard' }) => (
@@ -11,3 +12,8 @@ export const Header = ({ title = 'Mi Dashboard' }) => (
     </button>
   </header>
 );
+
+Header.propTypes = {
+  title: PropTypes.string,
+};
+

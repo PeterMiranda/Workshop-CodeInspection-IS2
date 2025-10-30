@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types'; // FIX 1: Importar PropTypes
 import { X, ArrowLeft } from 'lucide-react';
 import { mockDepartamentos, mockEquipos, mockUsuarios } from '../mock-cursos';
 
+// Se asigna un ID a la etiqueta de input para enlazarla con el label (Líneas 97, 155, 213)
+const DEPARTAMENTO_INPUT_ID = "dep-input";
+const EQUIPO_INPUT_ID = "equipo-input";
+const USER_INPUT_ID = "user-input";
+
+// FIX 1: Añadir validación de props para 'onBack'
 const AsignarUsuariosModal = ({ onBack }) => {
   const [depInput, setDepInput] = useState('');
   const [equipoInput, setEquipoInput] = useState('');
@@ -88,10 +95,12 @@ const AsignarUsuariosModal = ({ onBack }) => {
           </button>
           {/* Departamento */}
           <div style={{ position: 'relative', maxWidth: 320 }}>
-            <label style={{ fontWeight: 600, color: '#111', marginBottom: 4, display: 'block' }}>
+            {/* FIX 2: Añadir htmlFor y el 'id' al input */}
+            <label htmlFor={DEPARTAMENTO_INPUT_ID} style={{ fontWeight: 600, color: '#111', marginBottom: 4, display: 'block' }}>
               Agregar departamento
             </label>
             <input
+              id={DEPARTAMENTO_INPUT_ID} // Añadir ID
               type="text"
               value={depInput}
               onChange={e => setDepInput(e.target.value)}
@@ -128,17 +137,30 @@ const AsignarUsuariosModal = ({ onBack }) => {
                   <li
                     key={dep}
                     style={{
-                      padding: '8px 12px',
-                      cursor: 'pointer',
+                      padding: 0, // Remover padding del li, se pone en el botón
                       color: '#111',
                       whiteSpace: 'nowrap',
                       maxWidth: 320,
                       overflow: 'hidden',
                       textOverflow: 'ellipsis'
                     }}
-                    onClick={() => addDep(dep)}
                   >
-                    {dep}
+                    {/* FIX 3: Usar un botón interactivo dentro del <li> para la acción */}
+                    <button
+                        onClick={() => addDep(dep)}
+                        style={{
+                            width: '100%',
+                            textAlign: 'left',
+                            padding: '8px 12px',
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            color: 'inherit',
+                            fontSize: '1rem'
+                        }}
+                    >
+                        {dep}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -146,10 +168,12 @@ const AsignarUsuariosModal = ({ onBack }) => {
           </div>
           {/* Equipo */}
           <div style={{ position: 'relative', maxWidth: 320 }}>
-            <label style={{ fontWeight: 600, color: '#111', marginBottom: 4, display: 'block' }}>
+            {/* FIX 2: Añadir htmlFor y el 'id' al input */}
+            <label htmlFor={EQUIPO_INPUT_ID} style={{ fontWeight: 600, color: '#111', marginBottom: 4, display: 'block' }}>
               Agregar equipo
             </label>
             <input
+              id={EQUIPO_INPUT_ID} // Añadir ID
               type="text"
               value={equipoInput}
               onChange={e => setEquipoInput(e.target.value)}
@@ -186,17 +210,30 @@ const AsignarUsuariosModal = ({ onBack }) => {
                   <li
                     key={eq}
                     style={{
-                      padding: '8px 12px',
-                      cursor: 'pointer',
-                      color: '#111',
-                      whiteSpace: 'nowrap',
-                      maxWidth: 320,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis'
+                        padding: 0,
+                        color: '#111',
+                        whiteSpace: 'nowrap',
+                        maxWidth: 320,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
                     }}
-                    onClick={() => addEquipo(eq)}
                   >
-                    {eq}
+                    {/* FIX 3: Usar un botón interactivo dentro del <li> para la acción */}
+                    <button
+                        onClick={() => addEquipo(eq)}
+                        style={{
+                            width: '100%',
+                            textAlign: 'left',
+                            padding: '8px 12px',
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            color: 'inherit',
+                            fontSize: '1rem'
+                        }}
+                    >
+                        {eq}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -204,10 +241,12 @@ const AsignarUsuariosModal = ({ onBack }) => {
           </div>
           {/* Integrante */}
           <div style={{ position: 'relative', maxWidth: 320 }}>
-            <label style={{ fontWeight: 600, color: '#111', marginBottom: 4, display: 'block' }}>
+            {/* FIX 2: Añadir htmlFor y el 'id' al input */}
+            <label htmlFor={USER_INPUT_ID} style={{ fontWeight: 600, color: '#111', marginBottom: 4, display: 'block' }}>
               Agregar integrante
             </label>
             <input
+              id={USER_INPUT_ID} // Añadir ID
               type="text"
               value={userInput}
               onChange={e => setUserInput(e.target.value)}
@@ -244,17 +283,30 @@ const AsignarUsuariosModal = ({ onBack }) => {
                   <li
                     key={u}
                     style={{
-                      padding: '8px 12px',
-                      cursor: 'pointer',
-                      color: '#111',
-                      whiteSpace: 'nowrap',
-                      maxWidth: 320,
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis'
+                        padding: 0,
+                        color: '#111',
+                        whiteSpace: 'nowrap',
+                        maxWidth: 320,
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
                     }}
-                    onClick={() => addUser(u)}
                   >
-                    {u}
+                    {/* FIX 3: Usar un botón interactivo dentro del <li> para la acción */}
+                    <button
+                        onClick={() => addUser(u)}
+                        style={{
+                            width: '100%',
+                            textAlign: 'left',
+                            padding: '8px 12px',
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            color: 'inherit',
+                            fontSize: '1rem'
+                        }}
+                    >
+                        {u}
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -396,6 +448,11 @@ const AsignarUsuariosModal = ({ onBack }) => {
       </div>
     </div>
   );
+};
+
+// FIX 1: Añadir la validación de PropTypes
+AsignarUsuariosModal.propTypes = {
+    onBack: PropTypes.func.isRequired,
 };
 
 export default AsignarUsuariosModal;
