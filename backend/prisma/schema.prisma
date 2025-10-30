@@ -1,0 +1,153 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Ejemplo de modelo, REPITO... ES UN EJEMPLO!!!! :c
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(255)
+  name      String   @db.VarChar(255)
+  role      String   @default("USER")
+  plan      String   @default("FREE")
+  //createdAt DateTime @default(now()) @map("created_at")
+  //updatedAt DateTime @updatedAt @map("updated_at")
+
+  //relaciones
+  cursesCreated Course[]  @relation("InstructorCourses")
+  enrollments   Enrollment[]
+  progresos     Progress[]
+
+  @@map("users")
+}
+
+model Course {
+  id          Int        @id @default(autoincrement())
+  title       String     @db.VarChar(255)
+  description String?    @db.Text
+  isPublished Boolean    @default(false) @map("is_published")
+  instructorId Int       @map("instructor_id")
+  //imageUrl    String?    @map("image_url") @db.VarChar(500)
+  //createdAt   DateTime   @default(now()) @map("created_at")
+  //updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  //relaciones
+  instructor  User         @relation("InstructorCourses", fields: [instructorId], references: [id])
+  modules     Module[]
+  enrollments Enrollment[]
+  
+  @@index([instructorId])
+  @@map("courses")
+}
+
+model Module {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  description String? @db.Text
+  courseId    Int      @map("course_id")
+  order       Int      @default(0)
+  
+  //createdAt DateTime @default(now()) @map("created_at")
+  //updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relaciones
+  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  lessons Lesson[]
+
+  @@index([courseId])
+  @@map("modules")
+}
+
+// Lecciones individuales dentro de un módulo
+model Lesson {
+  id          Int        @id @default(autoincrement())
+  title       String     @db.VarChar(255)
+  content     String     @db.Text
+  moduleId    Int        @map("module_id")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  // Relaciones
+  module   Module     @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  progress Progress[]
+
+  @@index([moduleId])
+  @@map("lessons")
+}
+
+// Inscripciones de estudiantes a cursos
+model Enrollment {
+  id           Int              @id @default(autoincrement())
+  userId       Int              @map("user_id")
+  courseId     Int              @map("course_id")
+  status       EnrollmentStatus @default(ACTIVE)
+  enrolledAt   DateTime         @default(now()) @map("enrolled_at")
+  completedAt  DateTime?        @map("completed_at")
+  
+  // Relaciones
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId]) // Un usuario no puede inscribirse dos veces al mismo curso
+  @@index([userId])
+  @@index([courseId])
+  @@map("enrollments")
+}
+
+// Progreso de lecciones completadas por estudiante
+model Progress {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  lessonId    Int      @map("lesson_id")
+  isCompleted Boolean  @default(false) @map("is_completed")
+  completedAt DateTime? @map("completed_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relaciones
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, lessonId]) // Un usuario solo puede tener un registro de progreso por lección
+  @@index([userId])
+  @@index([lessonId])
+  @@map("progress")
+}
+
+// ENUMS
+
+enum UserRole {
+  STUDENT
+  INSTRUCTOR
+  ADMIN
+}
+
+enum PlanType {
+  FREE
+  PREMIUM
+  ENTERPRISE
+}
+
+enum LessonType {
+  VIDEO
+  TEXT
+  QUIZ
+  ASSIGNMENT
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
